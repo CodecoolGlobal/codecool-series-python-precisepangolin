@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>CsED</title>
+    <title>{{ ID }}</title>
 
     <!-- Import Montserrat font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
     <!-- Normalize.css fixes lot of differences between browsers default styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
 
@@ -34,33 +35,64 @@
 <div id="body-wrapper">
     <header class="clearfix">
         <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
-        <span id="header-title" class="title">Codecool Series DB</span>
+        <span id="header-title" class="title">
+                    Codecool Series DB
+                </span>
         <div id="header-auth">
             <button type="button" id="bt-register">Register</button>
             <button type="button" id="bt-login">Login</button>
         </div>
     </header>
     <section>
-        <h1 class="title text-center">Welcome page</h1>
+        <h1 class="title text-center">{{ show_detail['title'] }}</h1>
         <div class="card">
-            <h2>Welcome TV show lovers!</h2>
-            <p>This great site is happy to bring you your favourite TV show's <i>details</i>.</p>
-            <p></p>
-            <p>Okay, actually this is a designed dumb page without any logic.</p>
-            <p>You can find a navigational element, the so called "breadcrumb" above the page's title. Use it for
-                in-depth
-                navigation.
-            </p>
+            Details about movie {{ show_detail['title'] }}:
         </div>
-        <div class="card">
-            <ul>
-                {% for show in shows %}
-                    <li>
-                        <a href="{{ '/shows/' + (show['id'] | string) }}">{{ show['title'] }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+        <div class="card detailed-view">
+            <script type="text/javascript">
+                var videoId = '{{ show_detail['video_id'] }}';
+            </script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/embed-youtube.js') }}"></script>
+            <div class="row">
+                <img src="http://www.impawards.com/2016/posters/deadpool_ver5.jpg" alt="Deadpool poster"
+                     class="poster col col-third">
+                <div class="col col-twothird">
+                    <h2>{{ show_detail['title'] }}</h2>
+                    <p class="small grayed">{{ show_detail['runtime'] }} <span
+                            class="separator">|</span> {{ ganres['genres'] }} <span
+                            class="separator">|</span> {{ show_detail['year'] }} (USA)</p>
+                    <p>{{ show_detail['overview'] }}</p>
+                    {% if show_detail['trailer'] %}
+                        <div id="player" class="trailer col col-third"></div>
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                <p><b>Director:</b>&nbsp;<a href="#">Tim Miller</a></p>
+                <p><b>Writers:</b>&nbsp;<a href="#">Rhett Reese</a>, <a href="#">Paul Wernick</a></p>
+                <p><b>Stars:</b>&nbsp;{{ show_detail['actors'] }}</p>
+            </div>
         </div>
+            <div class="card">
+            Seasons:
+            <table>
+                <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Overview</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for season in seasons %}<tr>
+                    <td>{{ season['number'] }}</td>
+                    <td>{{ season['title'] }}</td>
+                    <td>{{ season['overview'] }}</td>
+                </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
+            </div>
     </section>
     <footer>
         Copyright, bla-bla
@@ -71,4 +103,5 @@
     <div class="light-blue-layer"></div>
 </div>
 </body>
+
 </html>
