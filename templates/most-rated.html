@@ -69,33 +69,51 @@
                 yearTd.appendChild(document.createTextNode(record.year));
                 let runtimeTd = document.createElement('td');
                 runtimeTd.appendChild(document.createTextNode(record.runtime));
+                let ratingTd = document.createElement('td');
+                ratingTd.appendChild(document.createTextNode(record.rating));
+                let genresTd = document.createElement('td');
+                genresTd.appendChild(document.createTextNode(record.genres));
+                let trailerTd = document.createElement('td');
+                if(record.trailer != null) trailerTd.appendChild(document.createTextNode(record.trailer))
+                else trailerTd.appendChild(document.createTextNode("No URL"));
+                let homepageTd = document.createElement('td');
+                if(record.homepage != null) homepageTd.appendChild(document.createTextNode(record.homepage))
+                else homepageTd.appendChild(document.createTextNode("No URL"));
                 recordTr.appendChild(titleTd);
                 recordTr.appendChild(yearTd);
                 recordTr.appendChild(runtimeTd);
+                recordTr.appendChild(ratingTd);
+                recordTr.appendChild(genresTd);
+                recordTr.appendChild(trailerTd);
+                recordTr.appendChild(homepageTd);
                 tbody.appendChild(recordTr);
             }
 
+
+
         })
+
+            let titleH = document.getElementById('titleH');
+            if(direction['title'] === "DESC")
+            titleH.innerHTML = "<a href='javascript:order(%27title%27)'>Title ▾</a>"
+            else if(direction['title'] === "ASC")
+            titleH.innerHTML = "<a href='javascript:order(%27title%27)'>Title ▴</a>"
+            else titleH.innerHTML = "<a href='javascript:order(%27title%27)'>Title</a>";
     }
 </script>
 <table><thead>
-<tr>
-    <th>
-        <!--<a href="/shows/order-by-title-{% if order == "ASC" %}DESC{% else %}ASC{% endif %}">Title</a>-->
+<tr id="headers">
+    <th id="titleH">
         <a href="javascript:order('title')">Title</a>
     </th>
-    <th>
-    <a href="javascript:order('year')">Year</a>
-       <!-- <a href="/shows/order-by-year-{% if order == "ASC" %}DESC{% else %}ASC{% endif %}">Year</a>-->
+    <th id="yearH">
+    <a href="javascript:order('year')">Year {% if order == "ASC" %}DESC{% else %}ASC{% endif %}</a>
     </th>
-    <th>
+    <th id="runH">
     <a href="javascript:order('runtime')">Runtime (min)</a>
-        <!--<a href="/shows/order-by-runtime-{% if order == "ASC" %}DESC{% else %}ASC{% endif %}">Runtime (min)</a>-->
     </th>
-    <th>
+    <th id="ratingH">
     <a href="javascript:order('rating')">Rating</a>
-        <!--<a href="/shows/order-by-rating-{% if order == "ASC" %}DESC{% else %}ASC{% endif %}">Rating</a>-->
-
     </th>
     <th>Genres</th>
     <th>Trailer</th>
@@ -131,7 +149,6 @@
         </div>
 <div class="card">
     <div class="pagination">
-        <!--<a href=""-->
         {% if page_number == 1 %}
             <a href="#">&lsaquo;</a>
         {% else %}
