@@ -58,7 +58,7 @@ def get_show_details(show_id):
                                        {"show_id": show_id}, False)
 
 
-def get_show_ganres(show_id):
+def get_show_genres(show_id):
     query = """
     SELECT shows.id AS id,
        STRING_AGG(genres.name, ', ' ORDER BY genres.name) AS genres
