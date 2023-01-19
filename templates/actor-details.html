@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>CsED</title>
+    <title>Details of actor {{ actor['name'] }}</title>
 
     <!-- Import Montserrat font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -28,9 +28,12 @@
 
     <!-- page specific styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style/detailed-view.css') }}">
+
 </head>
 
 <body>
+
+<div id="main"></div>
 <div id="body-wrapper">
     <header class="clearfix">
         <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
@@ -41,38 +44,61 @@
         </div>
     </header>
     <section>
-        <h1 class="title text-center">Welcome page</h1>
+        <h1 class="title text-center">Details of actor {{ actor['name'] }}</h1>
         <div class="card">
-            <h2>Welcome TV show lovers!</h2>
-            <p>This great site is happy to bring you your favourite TV show's <i>details</i>.</p>
-            <p></p>
-            <p>Okay, actually this is a designed dumb page without any logic.</p>
-            <p>You can find a navigational element, the so called "breadcrumb" above the page's title. Use it for
-                in-depth
-                navigation.
-            </p>
-            <h3>Available modules:</h3>
-            <p><a href="/shows/most-rated/">Most rated shows</a> | <a href="/actors">Actors</a> |
-                <a href="/ratings">Ratings</a> | <a href="/ordered-shows">Ordered shows</a> |
-            <a href="/filter-actors">Filter actors</a> | <a href="/birthday-actors">Birthday actors</a></p>
+
+<table><thead>
+<tr id="headers">
+    <th>
+        Actor name</th>
+    <th>
+        Birth
+    </th>
+        <th>
+        Death
+    </th>
+        <th>
+        Bio
+    </th>
+
+</tr>
+</thead>
+
+<tbody id="actors">
+<tr>
+<td>
+{{ actor['name'] }}
+</td>
+    <td>
+        {{ actor['birthday'] }}
+    </td>
+        <td>{% if actor['death'] %}
+        {{ actor['death'] }}
+            {% else %}
+            Alive
+            {% endif %}
+    </td>
+        <td>
+        {{ actor['biography'] }}
+    </td>
+</tr>
+
+</tbody>
+
+</table>
         </div>
-        <div class="card">
-            <ul>
-                {% for show in shows %}
-                    <li>
-                        <a href="{{ '/shows/' + (show['id'] | string) }}">{{ show['title'] }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+
+
     </section>
     <footer>
         Copyright, bla-bla
     </footer>
 </div>
-<div class="background">
+ <div class="background">
     <div class="dark-blue-layer"></div>
     <div class="light-blue-layer"></div>
 </div>
+
+<script src="/static/js/actors.js"></script>
 </body>
 </html>

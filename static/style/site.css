@@ -53,6 +53,9 @@ a:hover {
     color: rgb(203, 75, 70);
 }
 
+.nameDiv {
+    cursor: pointer;
+}
 
 /**
  * For modern browsers
@@ -75,4 +78,31 @@ a:hover {
 
 .clearfix:after {
     clear: both;
+}
+
+.tooltip .tooltiptext-even, .tooltip .tooltiptext-uneven {
+    visibility: hidden;
+    width: 80px;
+    height: 20px;
+    border-radius: 6px;
+    text-align: center;
+    padding: 10px 0px;
+    position: absolute;
+    margin-top: -10px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext-even {
+    background-color: aquamarine;
+}
+
+.tooltip .tooltiptext-uneven {
+    background-color: lightgrey;
+}
+
+.tooltip:hover .tooltiptext-even, .tooltip:hover .tooltiptext-uneven {
+    visibility: visible;
+    opacity: 1;
 }

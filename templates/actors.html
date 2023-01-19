@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>CsED</title>
+    <title>Actors</title>
 
     <!-- Import Montserrat font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -28,9 +28,43 @@
 
     <!-- page specific styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style/detailed-view.css') }}">
+
 </head>
 
 <body>
+<script>
+    window.onload = (event) => {
+        const actorNames = document.querySelectorAll(".nameDiv");
+        console.log(actorNames);
+        const cancelButtons = document.querySelectorAll(".cancel");
+        const dialogs = document.querySelectorAll(".movieDialog");
+
+        function openCheck(dialog) {
+          if (dialog.open) {
+            console.log("Dialog open");
+          } else {
+            console.log("Dialog closed");
+          }
+        }
+
+        // Update button opens a modal dialog
+        for (let i = 0; i < actorNames.length; i++) {
+            console.log(actorNames[i]);
+            actorNames[i].addEventListener("click", () => {
+                dialogs[i].showModal();
+                openCheck(dialogs[i]);
+            });
+
+            // Form cancel button closes the dialog box
+            cancelButtons[i].addEventListener("click", () => {
+                dialogs[i].close();
+                openCheck(dialogs[i]);
+            });
+        }
+    };
+</script>
+
+<div id="main"></div>
 <div id="body-wrapper">
     <header class="clearfix">
         <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
@@ -41,38 +75,68 @@
         </div>
     </header>
     <section>
-        <h1 class="title text-center">Welcome page</h1>
+        <h1 class="title text-center">Actors</h1>
         <div class="card">
-            <h2>Welcome TV show lovers!</h2>
-            <p>This great site is happy to bring you your favourite TV show's <i>details</i>.</p>
-            <p></p>
-            <p>Okay, actually this is a designed dumb page without any logic.</p>
-            <p>You can find a navigational element, the so called "breadcrumb" above the page's title. Use it for
-                in-depth
-                navigation.
-            </p>
-            <h3>Available modules:</h3>
-            <p><a href="/shows/most-rated/">Most rated shows</a> | <a href="/actors">Actors</a> |
-                <a href="/ratings">Ratings</a> | <a href="/ordered-shows">Ordered shows</a> |
-            <a href="/filter-actors">Filter actors</a> | <a href="/birthday-actors">Birthday actors</a></p>
+            <p>Here is a list of 20 actors (alphabetic order).
+                Click on the name to display a list of shows the actors has starred in.</p>
+
+<table><thead>
+<tr id="headers">
+    <th id="nameH">
+        Name
+
+</tr>
+</thead>
+<tbody id="shows">{% for actor in actors %}
+<tr>
+
+
+
+    <dialog class="movieDialog">
+  <form method="dialog">
+    <p>
+      <label>{{ actor['name'] }} has starred in:</label>
+<ul>
+        {% for id, title in actor['show_details'].items() %}
+    <li> <a href="/shows/{{ id }}">{{ title }}</a> </li>
+
+        {% endfor %}
+</ul>
+
+    </p>
+    <div>
+      <button class="cancel" type="reset">Close</button>
+    </div>
+  </form>
+</dialog>
+
+
+        <td><span class="nameDiv">{{ actor['name'] }}</span>
+   </td>
+</tr>
+{% endfor %}
+
+
+
+
+
+
+</tbody>
+
+</table>
         </div>
-        <div class="card">
-            <ul>
-                {% for show in shows %}
-                    <li>
-                        <a href="{{ '/shows/' + (show['id'] | string) }}">{{ show['title'] }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+
+
     </section>
     <footer>
         Copyright, bla-bla
     </footer>
 </div>
-<div class="background">
+ <div class="background">
     <div class="dark-blue-layer"></div>
     <div class="light-blue-layer"></div>
 </div>
+
+<script src="/static/js/actors.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>{{ ID }}</title>
+    <title>{{ show_detail['title'] }}</title>
 
     <!-- Import Montserrat font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -60,10 +60,13 @@
                     <h2>{{ show_detail['title'] }}</h2>
                     <p class="small grayed">{{ show_detail['runtime'] }} <span
                             class="separator">|</span> {{ genres['genres'] }} <span
+                            class="separator">|</span> {{ show_detail['rating'] }}☆ <span
                             class="separator">|</span> {{ show_detail['year'] }} (USA)</p>
                     <p>{{ show_detail['overview'] }}</p>
+                    <p><a href="{{ '/shows/' + (show_detail['id'] | string) + '/actors' }}">Actors list</a></p>
                     {% if show_detail['trailer'] %}
                         <div id="player" class="trailer col col-third"></div>
+                    {% else %} No trailer
                     {% endif %}
                 </div>
             </div>
